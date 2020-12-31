@@ -1,0 +1,17 @@
+{
+	"name": "crow",
+	"main": "server.js",
+	"scripts": {
+		"build": "npm install",
+		"start": "node -r esm server.js"
+	},
+	"dependencies": {
+		"esm": "^3.2.25",
+		"express": "^4.17.1",
+		"socket.io": "^3.0.4"
+	},
+	"engines": {
+		"node": "12.12.0",
+		"npm": "6.11.3"
+	}
+}
