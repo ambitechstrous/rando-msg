@@ -1,1 +1,2 @@
-node_modules/*
+messaging-app-backend/node_modules/
+messaging-app-ui/node_modules/
