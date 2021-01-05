@@ -36,14 +36,14 @@
   }
 }
 
-html, body, #root, .App-Container {
+html, body, #root, .App-container {
   height: 100%;
   width: 100%;
   min-height: 100%;
   min-width: 100%;
 }
 
-.App-Content {
+.App-content {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

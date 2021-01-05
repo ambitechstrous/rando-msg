@@ -1,7 +1,6 @@
 import express from 'express';
 import http from 'http';
 import io from 'socket.io'
-import { sendMessage, listenToChat } from './api-endpoints-v1';
 
 // 1. Messaging works
 // 2. Functionality for different users per client

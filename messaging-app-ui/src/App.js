@@ -5,11 +5,11 @@ import SendMessageForm from './SendMessageForm';
 
 export default function App() {
   return (
-    <div className="App-Container">
+    <div className="App-container">
     	<div className="App-header">
     		<h1>App Name Here</h1>
     	</div>  
-    	<div className="App-Content">
+    	<div className="App-content">
 			<MessageViewer/>
       		<SendMessageForm/>    
     	</div>	
