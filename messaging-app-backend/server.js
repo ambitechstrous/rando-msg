@@ -32,18 +32,3 @@ app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 });
-
-//app.post('/api/v1/sendMessage', (req, res) => sendMessage(res, res, io));
-//app.get('/api/v1/listenToChat', listenToChat);
-//server.listen(port, () => console.log("Running on port " + port));
-
-// In this episode, Rick has a box with a universe in it, called a microverse battery, which he created to power his car
-// The battery represents large corporations, and the car represents their wealth and profits
-// Rick wants people to use the stepping gadget he created (i.e. corporate labor) to power his battery, and thus his car
-// He realizes the car is no longer being powered, so he goes into the microverse
-// In this world, rick meets Zeep, who created his own microverse battery
-// Think of the smaller microverse one as a smaller business, possibly owned by someone in an underrepresented group
-// This battery detracts from the power of Rick's battery, causing him to try to destroy the smaller microverse
-// And this is exactly how big corporations lobby to make it harder for smaller businesses to enter the market
-// As an ex-business owner myself, I've had to work with many federal and state laws that would have been challenging if I didn't have capital
-// Many regulations that involve fees and fines for starting businesses end up hurting smaller businesses more than the big ones, bc the big ones have plenty of capital to operate
