@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 
+function MessageView(props) {
+	return <div className="message-view" key={props.toString()}>
+		<h5 className="message-user-name">{props.user}</h5>
+		<div className="message-box">
+			<p>{props.message}</p>
+		</div>
+	</div>
+}
+
 export default class MessageViewer extends Component {
 	constructor(props) {
 		super(props);
@@ -23,10 +32,9 @@ export default class MessageViewer extends Component {
 	}
 
 	render() {
-		const data = JSON.stringify(this.state.messages);
-		return <div>
-			<h1>Will see messages here...</h1>
-			<p>{data}</p>
+		const messageViews = this.state.messages.map(x => MessageView(x));
+		return <div className="message-viewer-container">
+			<ul className="message-list">{messageViews}</ul>
 		</div>
 	}
 }

@@ -10,8 +10,11 @@ export default class SendMessageForm extends Component {
 	sendMessage(event) {
 		event.preventDefault();
 
-		const socket = io('http://localhost:8000');
-		socket.emit('send message', {user: 'Jose', message: this.state.message});
+		const message = this.state.message;
+		this.setState({message: ''}, () => {
+			const socket = io('http://localhost:8000');
+			socket.emit('send message', {user: 'Jose', message: message});
+		});
 	}
 
 	handleChange(event) {
@@ -19,13 +22,14 @@ export default class SendMessageForm extends Component {
 	}
 
 	render() {
-		return <div>
-			<form onSubmit={e => this.sendMessage(e)}>
+		return <div className="send-message-container">
+			<form className="send-message-form" onSubmit={e => this.sendMessage(e)}>
 				<input type="text" 
+					className="send-message-box"
 					value={this.state.message} 
 					onChange={e => this.handleChange(e)} 
 					placeholder="Send a message..."/>
-				<input type="submit" value="Send"/>
+				<input className="send-message-btn" type="submit" value="Send"/>
 			</form>
 		</div>
 	}

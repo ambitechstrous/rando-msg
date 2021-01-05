@@ -6,7 +6,7 @@ export async function sendMessage(req, res, io) {
 	const message = req.query.message;
 	if (lastMessage != message) {
 		lastMessage = {
-			text: message,
+			message: message,
 			user: req.query.user
 		};
 	}

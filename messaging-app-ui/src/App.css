@@ -15,7 +15,6 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +34,47 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+html, body, #root, .App-Container {
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.App-Content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.send-me
+
+.message-form {
+  padding-bottom: 5px;
+}
+
+.send-message-box {
+  width: 95%;
+}
+
+.message-viewer-container, .send-message-form, .send-message-container {
+  width: 100%;
+}
+
+.message-view {
+  text-align: left;
+}
+
+.message-user-name {
+  padding: 5px;
+}
+
+.message-box {
+  background-color: "gray";
+  border: 1px solid gray;
+  padding-left: 5px;
+  padding-right: 5px;
 }
