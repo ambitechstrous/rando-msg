@@ -15,7 +15,3 @@ export async function sendMessage(req, res, io) {
 
 	res.send({success: true});
 }
-
-export async function listenToChat(req, resp) {
-
-}
