@@ -3,15 +3,22 @@
 	"main": "server.js",
 	"scripts": {
 		"build": "npm install",
-		"start": "node -r esm server.js"
+		"start": "if-env NODE_ENV=production ?? npm run start:prod || npm run start:dev",
+		"start:prod": "node -r esm server.js",
+		"start:dev": "node -r esm -r dotenv server.js"
 	},
 	"dependencies": {
+		"dotenv": "^8.2.0",
 		"esm": "^3.2.25",
 		"express": "^4.17.1",
-		"socket.io": "^3.0.4"
+		"socket.io": "^3.0.4",
+		"socket.io-redis": "^6.0.1"
 	},
 	"engines": {
 		"node": "12.12.0",
 		"npm": "6.11.3"
+	},
+	"devDependencies": {
+		"@types/redis": "^2.8.28"
 	}
 }

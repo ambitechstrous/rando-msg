@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
+import { sendMessage } from './MessageFunctions';
 
 export default class SendMessageForm extends Component {
 	constructor(props) {
@@ -7,13 +8,12 @@ export default class SendMessageForm extends Component {
 		this.state = {message: ''};
 	}
 
-	sendMessage(event) {
+	submitMessage(event) {
 		event.preventDefault();
 
 		const message = this.state.message;
 		this.setState({message: ''}, () => {
-			const socket = io('http://localhost:8000');
-			socket.emit('send message', {user: 'Jose', message: message});
+			sendMessage(message);
 		});
 	}
 
@@ -23,7 +23,7 @@ export default class SendMessageForm extends Component {
 
 	render() {
 		return <div className="send-message-container">
-			<form className="send-message-form" onSubmit={e => this.sendMessage(e)}>
+			<form className="send-message-form" onSubmit={e => this.submitMessage(e)}>
 				<input type="text" 
 					className="send-message-box"
 					value={this.state.message} 
