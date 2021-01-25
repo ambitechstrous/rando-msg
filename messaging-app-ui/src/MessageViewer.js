@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { listenToMessages } from './MessageFunctions';
+import { connect } from 'react-redux';
+import { listenToMessages, listenToRoomConnections } from './MessageFunctions';
 
 function MessageView(props) {
 	return <div className="message-view" key={props.toString()}>
@@ -10,11 +11,18 @@ function MessageView(props) {
 	</div>
 }
 
-export default class MessageViewer extends Component {
+class MessageViewer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {messages: []};
+	}
+
+	listenToEvents() {
+		console.log("listen to events");
 		listenToMessages((data) => this.addMessage(data));
+		listenToRoomConnections((data) => {
+			console.log("USER CONNECTED" + data);
+		});
 	}
 
 	addMessage(data) {
@@ -30,3 +38,9 @@ export default class MessageViewer extends Component {
 		</div>
 	}
 }
+
+const mapStateToProps = state => {
+	return { messages: getAllMessages() };
+};
+
+export default connect(mapStateToProps)(MessageViewer);

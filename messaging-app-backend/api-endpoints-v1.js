@@ -1,7 +1,5 @@
 import SocketEvents from './socket-events';
-
-let rooms = [];
-var lastMessage = {};
+import { getCurrentRoom } from './rooms';
 
 // export async function sendMessage(req, res, io) {
 // 	console.log("Hitting this");
@@ -21,17 +19,11 @@ var lastMessage = {};
 
 // TODO: Multiple rooms
 export async function joinRoom(req, res, io) {
-	if (rooms.length == 0) {
-		const roomName = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-		rooms.push(roomName);
-	}
-
+	const room = getCurrentRoom();
 	const user = req.query.user;
-	const socket_id = Math.random().toString(36).substr(2, 9);
-
-	io.of('/').adapter.remoteJoin(socket_id, rooms[0]);
-	io.to(rooms[0]).emit(SocketEvents.USER_JOINED, user);
-	res.send({room: rooms[0], socket_id: socket_id});;
+	io.to(room).emit(SocketEvents.USER_JOINED, user);
+	console.log("COnnected to room " + room);
+	res.send({room: room});
 }
 
 // TODO: Room as param (to support multiple rooms)
@@ -39,6 +31,6 @@ export async function sendMessage(req, res, io) {
 	const user = req.query.user;
 	const message = req.query.message;
 
-	io.to(rooms[0]).emit(SocketEvents.NEW_MESSAGE, {user, message});
+	io.to(getCurrentRoom()).emit(SocketEvents.NEW_MESSAGE, {user, message});
 	res.send({success: true});
 }

@@ -1,0 +1,3 @@
+1. Sockets to impact data in redux storage
+	- Separated functionality to be used anywhere
+2. Functionality for joining different rooms

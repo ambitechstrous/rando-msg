@@ -1,13 +1,25 @@
+// Core Libs and styling
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+
+// React Redux Libraries
+import { Provider } from 'react-redux';
+import Store from './Store';
+
+// ReactJS App Libraries/Modules
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import dotenv from 'dotenv';
+
+if (process.env.NODE_ENV !== 'production') {
+	dotenv.config();
+}
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={Store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 

@@ -5,6 +5,7 @@ import redis from 'redis';
 import { Server } from 'socket.io';
 import { createAdapter } from 'socket.io-redis';
 import { sendMessage, joinRoom } from './api-endpoints-v1';
+import { getCurrentRoom } from './rooms';
 
 // 1. Messaging works
 // 2. Functionality for different users per client
@@ -18,18 +19,31 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express();
 const port = process.env.PORT || 8000;
+const socket_port = process.env.SOCKET_PORT || 8080;
 const redis_host = process.env.REDIS_HOST;
 const redis_pass = process.env.REDIS_PW;
 const server = app.listen(port, () => console.log("Running on port " + port));
 
-const io = new Server(port);
+const io = new Server(socket_port, {cors: {origin: '*'}});
 const pubClient = redis.createClient({host: redis_host, port: 6379, password: redis_pass});
 const subClient = pubClient.duplicate();
 
 io.adapter(createAdapter({pubClient, subClient}));
 
 io.on('connection', (socket) => {
-	console.log("Client connected!");
+	try {
+		io.of('/').adapter.remoteJoin(socket.id, getCurrentRoom(), err => {
+			if (err) {
+				console.log("Error joining remotely");
+				console.log(err);
+			} else {
+				console.log("Successfully remote joined");
+			}
+		});
+		console.log("Socket: " + socket);
+	} catch (e) {
+		console.log("Error: " + e);
+	}
 });
 
 // const socket_conn = io(server, {

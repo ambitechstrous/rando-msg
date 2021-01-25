@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
-import { sendMessage } from './MessageFunctions';
+import { connect } from 'react-redux';
+import { sendMessage } from './redux/actions';
+//import { sendMessage } from './MessageFunctions';
 
-export default class SendMessageForm extends Component {
+class SendMessageForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {message: ''};
@@ -13,7 +14,7 @@ export default class SendMessageForm extends Component {
 
 		const message = this.state.message;
 		this.setState({message: ''}, () => {
-			sendMessage(message);
+			this.props.sendMessage(message);
 		});
 	}
 
@@ -34,3 +35,5 @@ export default class SendMessageForm extends Component {
 		</div>
 	}
 }
+
+export default connect(null, { sendMessage })(SendMessageForm);

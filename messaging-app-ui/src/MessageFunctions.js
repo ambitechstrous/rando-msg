@@ -1,25 +1,28 @@
+import redis from 'redis';
 import { Server } from 'socket.io';
+import { io } from 'socket.io-client';
 import { createAdapter } from 'socket.io-redis';
-import { RedisClient } from 'redis';
 import { getRoom, getUser } from './SessionInfo';
 
 const redis_host = process.env.REDIS_HOST;
 const redis_pass = process.env.REDIS_PW;
 
-const io = new Server(port);
-const pubClient = redis.createClient({host: redis_host, port: 6379, password: redis_pass});
-const subClient = pubClient.duplicate();
+const socket = io('ws://localhost:8080/');
+//const socket_port = process.env.PORT || 8080;
+//const io = new Server(socket_port);
+//const pubClient = redis.createClient({host: redis_host, port: 6379, password: redis_pass});
+//const subClient = pubClient.duplicate();
 //const socket = io('http://localhost:8000');
 
-io.adapter(createAdapter({pubClient, subClient}));
+//io.adapter(createAdapter({pubClient, subClient}));
 
 // const socket = io('http://localhost:8000');
 // 			socket.emit('send message', {user: getUser(), message: message});
 export function sendMessage(message) {
 	const requestOptions = {
 		method: 'POST',
-		headers: { 'Content-Type', 'application/json'},
-		body: JSON.stringify({message: message, user: getUser(), room: getRoom()});
+		headers: { 'Content-Type': 'application/json'},
+		body: JSON.stringify({message: message, user: getUser(), room: getRoom()})
 	};
 
 	fetch('http://localhost:8000/sendMessage', requestOptions)
@@ -30,13 +33,13 @@ export function sendMessage(message) {
 }
 
 export function listenToMessages(callback) {
-	io.of(getRoom()).on('new message', (data) => {
+	socket.of(getRoom()).on('new message', (data) => {
 		callback(data);
 	});
 }
 
 export function listenToRoomConnections(callback) {
-	io.of(getRoom()).on('user joined', (data) => {
+	socket.of(getRoom()).on('user joined', (data) => {
 		callback(data);
 	});
 }

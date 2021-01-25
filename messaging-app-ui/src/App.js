@@ -1,25 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 import MessageViewer from './MessageViewer';
 import SendMessageForm from './SendMessageForm';
 import { setRoom, getUser } from './SessionInfo';
 
 export default class App extends React.Component {
-	constructor(props) {
-		super(props);
-	}
 
 	componentDidMount() {
 		const requestOptions = {
 			method: 'POST',
-			headers: { 'Content-Type', 'application/json'},
-			body: JSON.stringify({message: message, user: getUser()});
+			headers: { 'Content-Type': 'application/json'},
+			body: JSON.stringify({user: getUser()})
 		};	
 
 		fetch('http://localhost:8000/joinRoom', requestOptions)
 			.then(res => res.json())
 			.then(data => {
 				setRoom(data.room);
+				MessageViewer.listenToEvents();
 			})
 			.catch(err => {
 				alert('Error joining room');
