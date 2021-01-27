@@ -40,25 +40,13 @@ io.on('connection', (socket) => {
 				console.log("Successfully remote joined");
 			}
 		});
-		console.log("Socket: " + socket);
 	} catch (e) {
 		console.log("Error: " + e);
 	}
 });
 
-// const socket_conn = io(server, {
-// 	cors: {origin: '*'}
-// });
-
-// socket_conn.on('connection', (socket) => {
-// 	console.log("User connected!");
-
-// 	socket.on('send message', (data) => {
-// 		console.log("Sending message...");
-// 		socket_conn.emit('new message', data);
-// 	});
-// });
-
+app.use(express.urlencoded());
+app.use(express.json());
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST');

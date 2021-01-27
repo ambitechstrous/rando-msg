@@ -1,43 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import MessageViewer from './MessageViewer';
-import SendMessageForm from './SendMessageForm';
+import Header from './components/Header';
+import MessageViewer from './components/MessageViewer';
+import SendMessageForm from './components/SendMessageForm';
 import { setRoom, getUser } from './SessionInfo';
 
-export default class App extends React.Component {
-
-	componentDidMount() {
-		const requestOptions = {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json'},
-			body: JSON.stringify({user: getUser()})
-		};	
-
-		fetch('http://localhost:8000/joinRoom', requestOptions)
-			.then(res => res.json())
-			.then(data => {
-				setRoom(data.room);
-				MessageViewer.listenToEvents();
-			})
-			.catch(err => {
-				alert('Error joining room');
-				console.log(err);
-			});
-	}
-
-	render() {
-		return (
-    		<div className="App-container">
-    			<div className="App-header">
-    				<h1>Messaging App</h1>
-    				<p>Logged in as: {getUser()}</p>
-    			</div>  
-    			<div className="App-content">
-					<MessageViewer/>
-      				<SendMessageForm/>    
-    			</div>	
-    		</div>
-  		);
-	}
+export default function App() {
+	return (
+   		<div className="App-container">
+    		<Header/>
+    		<div className="App-content">
+				<MessageViewer/>
+      			<SendMessageForm/>    
+   			</div>	
+   		</div>
+  	);
 }

@@ -1,7 +1,7 @@
-import { SEND_MESSAGE, JOIN_ROOM } from './actionTypes';
+import { NEW_MESSAGE, JOIN_ROOM } from './actionTypes';
 
-export const sendMessage = content => ({
-	type: SEND_MESSAGE,
+export const newMessage = content => ({
+	type: NEW_MESSAGE,
 	payload: content,
 });
 

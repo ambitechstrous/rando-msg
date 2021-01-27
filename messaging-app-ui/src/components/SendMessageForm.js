@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { sendMessage } from './redux/actions';
-//import { sendMessage } from './MessageFunctions';
+import { sendMessage } from '../MessageFunctions';
 
 class SendMessageForm extends Component {
 	constructor(props) {
@@ -14,7 +13,24 @@ class SendMessageForm extends Component {
 
 		const message = this.state.message;
 		this.setState({message: ''}, () => {
-			this.props.sendMessage(message);
+			this.sendMessage(message);
+		});
+	}
+
+	sendMessage(message) {
+		const requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				message: message, 
+				user: this.props.user, 
+				room: this.props.room})
+		};
+
+		fetch('http://localhost:8000/sendMessage', requestOptions)
+			.then(res => res.json())
+			.then((result) => {
+				console.log(result);
 		});
 	}
 
@@ -36,4 +52,12 @@ class SendMessageForm extends Component {
 	}
 }
 
-export default connect(null, { sendMessage })(SendMessageForm);
+const mapStateToProps = state => {
+	return {
+		messages: state.messages,
+		user: state.user,
+		room: state.room
+	};
+};
+
+export default connect(mapStateToProps)(SendMessageForm);

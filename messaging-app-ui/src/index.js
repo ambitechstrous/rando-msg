@@ -5,7 +5,7 @@ import './index.css';
 
 // React Redux Libraries
 import { Provider } from 'react-redux';
-import Store from './Store';
+import Store from './redux/store';
 
 // ReactJS App Libraries/Modules
 import App from './App';
