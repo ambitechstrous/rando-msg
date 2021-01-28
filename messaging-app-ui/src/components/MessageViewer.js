@@ -6,7 +6,7 @@ import { newMessage, joinRoom } from '../redux/actions';
 const socket = io('ws://localhost:8080/');
 
 function MessageView(props) {
-	return <div className="message-view" key={props.toString()}>
+	return <div className="message-view" key={JSON.stringify(props)}>
 		<h5 className="message-user-name">{props.user}</h5>
 		<div className="message-box">
 			<p>{props.message}</p>
@@ -50,12 +50,6 @@ class MessageViewer extends Component {
 		});
 	}
 
-	// addMessage(data) {
-	// 	let messages = this.state.messages;
-	// 	messages.push(data);
-	// 	this.setState({messages});
-	// }
-
 	render() {
 		const messageViews = this.props.messages.map(x => MessageView(x));
 		return <div className="message-viewer-container">
@@ -65,7 +59,6 @@ class MessageViewer extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log(state);
 	return {
 		messages: state.messages,
 		room: state.room

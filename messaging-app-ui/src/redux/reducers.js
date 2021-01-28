@@ -12,7 +12,7 @@ export default function(state = initialState, action) {
 		case NEW_MESSAGE:
 			const payload = action.payload;
 			const new_message = { message: payload.message, user: payload.user };
-			const messages = state.messages;
+			const messages = state.messages.map((item) => item);
 			messages.push(new_message);
 			return {
 				...state,
