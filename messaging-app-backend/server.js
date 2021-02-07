@@ -10,8 +10,13 @@ import { connectToRoom, findRoom } from './rooms';
 
 // TODOS
 // 1. More scalable solution for storing rooms
-// 2. Prettier UI
+// 2. README with details on project
+// 3. Small Stuff
+//		- createUser => initUser in UI
+// 4. Prettier UI
 //		- Show when users join
+//		- Loading animations
+
 if (process.env.NODE_ENV !== 'production') {
 	dotenv.config();
 }
