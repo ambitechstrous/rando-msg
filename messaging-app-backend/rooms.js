@@ -3,7 +3,7 @@ import SocketEvents from './socket-events';
 
 const MAX_USERS = 2;
 let rooms = [];
-var count = -1; // TODO Something better than count plz 
+var count = -1; // TODO Something better/more scalable than count 
 
 export function getCurrentRoom() {
 	const idx = rooms.length - 1;
