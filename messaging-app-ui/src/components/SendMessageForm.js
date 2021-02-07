@@ -28,7 +28,7 @@ class SendMessageForm extends Component {
 		this.state = {message: '', status: STATUS.IDLE, err: ''};
 	}
 
-	async submitMessage(event) {
+	submitMessage(event) {
 		console.log(`Sending message...`);
 		event.preventDefault();
 

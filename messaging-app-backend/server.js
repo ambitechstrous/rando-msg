@@ -8,12 +8,10 @@ import { createAdapter } from 'socket.io-redis';
 import { sendMessage, joinRoom } from './api-endpoints-v1';
 import { connectToRoom, findRoom } from './rooms';
 
-// 1. Messaging works
-// 2. Functionality for different users per client
-// 		- some API endpoint /.../<unique_id>
-//		- connect sockets to this endpoint...
-// 3. Adding users to segmented convos (i.e. different convos)
-// 4. Prettier UI
+// TODOS
+// 1. More scalable solution for storing rooms
+// 2. Prettier UI
+//		- Show when users join
 if (process.env.NODE_ENV !== 'production') {
 	dotenv.config();
 }
