@@ -1,15 +1,14 @@
-import { NEW_MESSAGE, JOIN_ROOM } from './actionTypes';
+import { ADD_MESSAGE, JOIN_ROOM, CREATE_USER } from './actionTypes';
 
-const user = 'user_' + Math.random().toString(36).substr(2, 9);
 const initialState = {
-	user: user,
+	user: '',
 	room: '',
 	messages: [],
 };
 
 export default function(state = initialState, action) {
 	switch (action.type) {
-		case NEW_MESSAGE:
+		case ADD_MESSAGE:
 			const payload = action.payload;
 			const new_message = { message: payload.message, user: payload.user };
 			const messages = state.messages.map((item) => item);
@@ -23,6 +22,11 @@ export default function(state = initialState, action) {
 				...state,
 				room: action.payload.room
 			};
+		case CREATE_USER:
+			return {
+				...state,
+				user: action.payload.user
+			}
 		default: 
 			return state;
 	}

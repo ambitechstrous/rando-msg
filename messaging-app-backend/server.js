@@ -2,10 +2,11 @@ import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
 import redis from 'redis';
+import SocketEvents from './socket-events';
 import { Server } from 'socket.io';
 import { createAdapter } from 'socket.io-redis';
 import { sendMessage, joinRoom } from './api-endpoints-v1';
-import { getCurrentRoom } from './rooms';
+import { connectToRoom, findRoom } from './rooms';
 
 // 1. Messaging works
 // 2. Functionality for different users per client
@@ -30,20 +31,7 @@ const subClient = pubClient.duplicate();
 
 io.adapter(createAdapter({pubClient, subClient}));
 
-io.on('connection', (socket) => {
-	try {
-		io.of('/').adapter.remoteJoin(socket.id, getCurrentRoom(), err => {
-			if (err) {
-				console.log("Error joining remotely");
-				console.log(err);
-			} else {
-				console.log("Successfully remote joined");
-			}
-		});
-	} catch (e) {
-		console.log("Error: " + e);
-	}
-});
+io.on('connection', (socket) => connectToRoom(io, socket));
 
 app.use(express.urlencoded());
 app.use(express.json());
@@ -51,6 +39,7 @@ app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
 	res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	res.setHeader('Content-Type', 'application/json');
 	next();
 });
 

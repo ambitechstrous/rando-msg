@@ -4,7 +4,6 @@ import React from 'react';
 import Header from './components/Header';
 import MessageViewer from './components/MessageViewer';
 import SendMessageForm from './components/SendMessageForm';
-import { setRoom, getUser } from './SessionInfo';
 
 export default function App() {
 	return (

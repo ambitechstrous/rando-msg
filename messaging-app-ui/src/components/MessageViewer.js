@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { io } from 'socket.io-client';
-import { newMessage, joinRoom } from '../redux/actions';
+import { addMessage, joinRoom, createUser } from '../redux/actions';
 
-const socket = io('ws://localhost:8080/');
+import SocketEvents from '../constants/socket-events';
+
+const socket = io.connect('http://localhost:8080/', {reconnect: true});
 
 function MessageView(props) {
 	return <div className="message-view" key={JSON.stringify(props)}>
@@ -21,31 +23,44 @@ class MessageViewer extends Component {
 	}
 
 	componentDidMount() {
-		const requestOptions = {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json'},
-			body: JSON.stringify({user: this.props.user})
-		};	
+		socket.on(SocketEvents.CONNECTION_FAILED, (err) => {
+			alert('Error joining room');
+			console.log(`Error joining room\n${err}`);
+		});
 
-		fetch('http://localhost:8000/joinRoom', requestOptions)
-			.then(res => res.json())
-			.then(data => {
-				console.log(data);
-				this.props.joinRoom({room: data.room});
-				this.listenToEvents();
-			})
-			.catch(err => {
-				alert('Error joining room');
-				console.log(err);
-			});
+		socket.on(SocketEvents.USER_CONNECTED, (socket_data) => {
+			const genertedUser = 'user_' + Math.random().toString(36).substr(2, 9);
+			const requestOptions = {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json'},
+				body: JSON.stringify({user: genertedUser, room: socket_data.room})
+			};	
+
+			fetch('http://localhost:8000/joinRoom', requestOptions)
+				.then(res => res.json())
+				.then(data => {
+					const user = data.user;
+					const room = data.room;
+					console.log(`Successfully joined room ${room}`);
+
+					this.props.createUser({user});
+					this.props.joinRoom({room});
+					this.listenToEvents();
+				})
+				.catch(err => {
+					alert('Error joining room');
+					console.log(`Error joining room\n${err}`);
+				});
+		});
 	}
 
 	listenToEvents() {
-		socket.on(this.state.room).on('new message', (data) => {
-			this.props.newMessage(data);
+		socket.on(this.state.room).on(SocketEvents.NEW_MESSAGE, (data) => {
+			this.props.addMessage(data);
 		});
 
-		socket.on(this.state.room).on('user joined', (data) => {
+		socket.on(this.state.room).on(SocketEvents.USER_JOINED, (data) => {
+			// TODO: Show user connected in UI
 			console.log("USER CONNECTED");
 		});
 	}
@@ -61,8 +76,9 @@ class MessageViewer extends Component {
 const mapStateToProps = state => {
 	return {
 		messages: state.messages,
-		room: state.room
+		room: state.room,
+		user: state.user
 	};
 };
 
-export default connect(mapStateToProps, { newMessage, joinRoom })(MessageViewer);
+export default connect(mapStateToProps, { addMessage, joinRoom, createUser })(MessageViewer);
