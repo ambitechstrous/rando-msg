@@ -1,3 +1,5 @@
-export const ADD_MESSAGE = "ADD_MESSAGE";
-export const JOIN_ROOM = "JOIN_ROOM";
-export const CREATE_USER = "CREATE_USER";
+export const ADD_MESSAGE = 'addMessage';
+export const ADD_OTHER_USER = 'addOtherUser';
+export const JOIN_ROOM = 'joinRoom';
+export const INIT_USER = 'initUser';
+export const UPDATE_STATUS = 'updateStatus';

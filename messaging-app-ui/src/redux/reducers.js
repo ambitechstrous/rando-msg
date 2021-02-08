@@ -1,4 +1,4 @@
-import { ADD_MESSAGE, JOIN_ROOM, CREATE_USER } from './actionTypes';
+import { ADD_MESSAGE, JOIN_ROOM, INIT_USER } from './actionTypes';
 
 const initialState = {
 	user: '',
@@ -6,7 +6,7 @@ const initialState = {
 	messages: [],
 };
 
-export default function(state = initialState, action) {
+export default function rootReducer(state = initialState, action) {
 	switch (action.type) {
 		case ADD_MESSAGE:
 			const payload = action.payload;
@@ -22,7 +22,7 @@ export default function(state = initialState, action) {
 				...state,
 				room: action.payload.room
 			};
-		case CREATE_USER:
+		case INIT_USER:
 			return {
 				...state,
 				user: action.payload.user

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { addMessage } from '../redux/actions';
+import { connect, useDispatch } from 'react-redux';
 
 async function sendMessage(user, room, message) {
 	const requestOptions = {
@@ -25,13 +24,14 @@ class SendMessageForm extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {message: '', status: STATUS.IDLE, err: ''};
+		this.state = {message: ''};
 	}
 
 	submitMessage(event) {
 		console.log(`Sending message...`);
 		event.preventDefault();
 
+		// TODO: Use Redux state w/ dispatch instead of this
 		this.setState({...this.state, status: STATUS.SENDING}, () => {
 			try {
 				const message = this.state.message;
@@ -50,6 +50,7 @@ class SendMessageForm extends Component {
 					}
 				})
 				.catch(err => {
+					alert('Error sending message');
 					console.log(`ERROR sending message\n${err}`)
 				});
 			} catch (ex) {
@@ -84,4 +85,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, { addMessage })(SendMessageForm);
+export default connect(mapStateToProps)(SendMessageForm);

@@ -5,19 +5,23 @@ import './index.css';
 
 // React Redux Libraries
 import { Provider } from 'react-redux';
-import Store from './redux/store';
+import store from './redux/store';
 
 // ReactJS App Libraries/Modules
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import dotenv from 'dotenv';
 
+import { connectToRoom } from './redux/actions';
+
 if (process.env.NODE_ENV !== 'production') {
 	dotenv.config();
 }
 
+store.dispatch(connectToRoom);
+
 ReactDOM.render(
-  <Provider store={Store}>
+  <Provider store={store}>
     <App />
   </Provider>,
   document.getElementById('root')

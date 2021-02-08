@@ -13,6 +13,8 @@ import { connectToRoom, findRoom } from './rooms';
 // 2. README with details on project
 // 3. Small Stuff
 //		- createUser => initUser in UI
+//		- Distributed server instead of single (use adapters, maybe make one)
+//		- Use middleware for fetching data in React
 // 4. Prettier UI
 //		- Show when users join
 //		- Loading animations
