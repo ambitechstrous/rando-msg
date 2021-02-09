@@ -26,18 +26,6 @@ function updateStatus(dispatch, status) {
 	dispatch({type: UPDATE_STATUS, payload: {status}});
 }
 
-// async function listenForMessages(dispatch, socket, user, room) {
-// 	socket.on(room).on(NEW_MESSAGE, (data) => {
-// 		dispatch({
-// 			type: ADD_MESSAGE, 
-// 			payload: {user: data.user, room: data.room, message: data.message}});
-// 	});
-
-// 	socket.on(room).on(USER_JOINED, (data) => {
-// 		dispatch({type: ADD_OTHER_USER, payload: {user: data.user}});
-// 	});
-// }
-
 async function joinRoom(socket_data) {
 	try {
 		const generatedUser = 'user_' + Math.random().toString(36).substr(2, 9);
@@ -92,24 +80,6 @@ export function connectToRoom(dispatch) {
 			// TODO: split errStatus and normal status into 2 enums (ERROR will be err status)
 			updateStatus(dispatch, JOIN_ROOM_ERR);
 		});
-		// socket.on(CONNECTION_FAILED, (err) => {
-		// 	console.log(`Error joining room\n${err}`);
-
-		// 	// TODO: split errStatus and normal status into 2 enums (ERROR will be err status)
-		// 	updateStatus(dispatch, JOIN_ROOM_ERR);
-		// });
-
-		// socket.on(USER_CONNECTED, (socket_data) => {
-		// 	joinRoom(socket_data).then(data => {
-		// 		const user = data.user;
-		// 		const room = data.room;
-		// 		console.log(`Successfully joined room ${room}`);
-
-		// 		listenForMessages(dispatch, socket, user, room);
-		// 		dispatch({type: INIT_USER, payload: {user}});
-		// 		dispatch({type: JOIN_ROOM, payload: {room}});
-		// 		updateStatus(dispatch, OK);
-		// 	});
 	} catch (ex) {
 		console.error(`[ERROR] connecting to room\n${ex}`);
 		updateStatus(dispatch, JOIN_ROOM_ERR);
