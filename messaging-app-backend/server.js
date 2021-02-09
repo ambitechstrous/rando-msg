@@ -17,6 +17,7 @@ import { connectToRoom, findRoom } from './rooms';
 // 4. Prettier UI
 //		- Show when users join
 //		- Loading animations
+// 5. Show when user starts typing
 
 if (process.env.NODE_ENV !== 'production') {
 	dotenv.config();

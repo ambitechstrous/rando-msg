@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import SocketEvents from '../constants/socketEvents';
 
 // TODO call user self instead?
-function MessageView(user, props) {
+function MessageView(self, props) {
 	return <div className="message-view" key={JSON.stringify(props)}>
-		<h5 className="message-user-name">{user == props.user ? 'You' : props.user}</h5>
+		<h5 className="message-user-name">{self == props.user ? 'You' : props.user}</h5>
 		<div className="message-box">
 			<p>{props.message}</p>
 		</div>
