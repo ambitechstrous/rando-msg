@@ -78,3 +78,12 @@ html, body, #root, .App-container {
   padding-left: 5px;
   padding-right: 5px;
 }
+
+.status-overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

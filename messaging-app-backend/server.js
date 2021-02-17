@@ -50,3 +50,4 @@ app.use((req, res, next) => {
 
 app.post('/sendMessage', (req, res) => sendMessage(req, res, io));
 app.post('/joinRoom', (req, res) => joinRoom(req, res, io));
+app.post('/startTyping', (req, res) => startTyping(req, res, io));

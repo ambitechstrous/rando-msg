@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import { Arrow90degRight } from 'react-bootstrap-icons';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { sendMessage } from '../redux/actions';
 import { UPDATE_MSG_INPUT } from '../redux/actionTypes';
+import { LOADING } from '../constants/statusTypes';
 
 // async function sendMessage(user, room, message) {
 // 	const requestOptions = {
@@ -22,90 +26,34 @@ import { UPDATE_MSG_INPUT } from '../redux/actionTypes';
  	props.dispatch({type: UPDATE_MSG_INPUT, payload: {message: input}});
  }
 
- function submitMessage(event, props) {
- 	event.preventDefault();
- 	props.sendMessage();
+ function handleKeyDown(event, callback) {
+ 	if (event.key === 'Enter') {
+ 		callback();
+ 	}
  }
 
  function SendMessageForm(props) {
+ 	const isLoading = props.status === LOADING;
+ 	const sendMessage = () => props.sendMessage();
  	return <div className="send-message-container">
-			<form className="send-message-form" onSubmit={e => submitMessage(e, props)}>
+			<form className="send-message-form" onSubmit={e => e.preventDefault()}>
 				<input type="text" 
 					className="send-message-box"
 					value={props.message} 
 					onChange={e => handleChange(e, props)} 
-					placeholder="Send a message..."/>
-				<input className="send-message-btn" type="submit" value="Send"/>
+					placeholder="Send a message..."
+					onKeyDown={e => handleKeyDown(e, sendMessage)}/>
+				<Button variant="success" onClick={sendMessage}>
+					<Arrow90degRight/>
+				</Button>
 			</form>
 		</div>
  }
 
-// class SendMessageForm extends Component {
-
-// 	constructor(props) {
-// 		super(props);
-// 		this.state = {message: ''};
-// 	}
-
-// 	submitMessage(event) {
-// 		event.preventDefault();
-
-// 		const dispatch = useDispatch();
-// 		sendMessage(dispatch, this.props.user, this.props.room, this.state.message).then(res => {
-// 			if (res.succes) {
-// 				this.stateState({message: ''});
-// 			}
-// 		});
-
-// 		// TODO: Use Redux state w/ dispatch instead of this
-// 		// this.setState({...this.state, status: STATUS.SENDING}, () => {
-// 		// 	try {
-// 		// 		const message = this.state.message;
-// 		// 		const user = this.props.user;
-// 		// 		sendMessage(user, this.props.room, message).then(res => {
-// 		// 			if (res.success) {
-// 		// 				this.setState({...this.state, status: STATUS.IDLE, message: ''}, () => {
-// 		// 					console.log(`Message Successfully Sent`);
-// 		// 				});
-// 		// 			} else {
-// 		// 				// TODO: Make this sent, then idle after animation finishes
-// 		// 				this.setState({...this.state, status: STATUS.ERROR, err: res.error}, () => {
-// 		// 					alert(`Error sending message`);
-// 		// 					console.log(`ERROR Sending Message\n${res.error}`);
-// 		// 				});
-// 		// 			}
-// 		// 		})
-// 		// 		.catch(err => {
-// 		// 			alert('Error sending message');
-// 		// 			console.log(`ERROR sending message\n${err}`)
-// 		// 		});
-// 		// 	} catch (ex) {
-// 		// 		console.log(`[ERROR] Sending Message\n${ex}`)
-// 		// 	}				
-// 		// });
-// 	}
-
-// 	handleChange(event) {
-// 		this.setState({message: event.target.value});
-// 	}
-
-// 	render() {
-// 		return <div className="send-message-container">
-// 			<form className="send-message-form" onSubmit={e => this.submitMessage(e)}>
-// 				<input type="text" 
-// 					className="send-message-box"
-// 					value={props.message} 
-// 					onChange={e => this.handleChange(e)} 
-// 					placeholder="Send a message..."/>
-// 				<input className="send-message-btn" type="submit" value="Send"/>
-// 			</form>
-// 		</div>
-// 	}
-// }
-
 const mapStateToProps = state => {
 	return {
-		message: state.messageInput
+		message: state.messageInput,
+		status: state.status
 	};
 };
 

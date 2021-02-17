@@ -1,4 +1,10 @@
-import { ADD_MESSAGE, JOIN_ROOM, INIT_USER, UPDATE_MSG_INPUT } from './actionTypes';
+import { 
+	ADD_MESSAGE, 
+	JOIN_ROOM, 
+	INIT_USER, 
+	UPDATE_MSG_INPUT, 
+	UPDATE_STATUS } 
+	from './actionTypes';
 
 const initialState = {
 	user: '',
@@ -33,6 +39,11 @@ export default function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				messageInput: action.payload.message
+			}
+		case UPDATE_STATUS:
+			return {
+				...state,
+				status: action.payload.status
 			}
 		default: 
 			return state;

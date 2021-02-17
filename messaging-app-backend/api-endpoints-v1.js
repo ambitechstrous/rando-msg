@@ -30,3 +30,18 @@ export async function sendMessage(req, res, io) {
 		res.status(500).send({success: false, error: 'Unable to send message'});
 	}
 }
+
+// TODO: Test function, and add timing to turn off typing animation 
+export async function startTyping(req, res, io) {
+	try {
+		const user = req.body.user;
+		const room = req.body.room;
+		const payload = {user: user, message: message};
+
+		io.to(room).emit(SocketEvents.USER_TYPING, payload);
+		res.send({success: true, message: message});
+	} catch (ex) {
+		console.error(`ERROR STARTING TYPING\n${ex}\n`);
+		res.status(500).send({success: false, error: 'Unable to send typing notification'});
+	}
+}

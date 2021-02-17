@@ -95,7 +95,10 @@ export const sendMessage = (dispatch, getState) => {
 			const requestOptions = {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json'},
-				body: JSON.stringify({user: state.user, room: state.room, message: state.messageInput})
+				body: JSON.stringify({
+					user: state.user, 
+					room: state.room, 
+					message: state.messageInput})
 			};
 
 			const response = await fetch('http://localhost:8000/sendMessage', requestOptions);
